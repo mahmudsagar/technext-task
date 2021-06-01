@@ -1,11 +1,11 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 
-const UserContext = createContext();
+const AuthContext = createContext();
 
-const UserProvider = ({children}) => {
-
+const AuthProvider = ({children}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [users, setUsers] = useState([])
+
 
     const getUsers = async () => {
         const response = await fetch("https://jsonplaceholder.typicode.com/users")
@@ -14,10 +14,11 @@ const UserProvider = ({children}) => {
     }
     useEffect(() => {
         getUsers()
+
     }, [])
 
     return (
-        <UserContext.Provider
+        <AuthContext.Provider
             value={{
                 users,
                 isLoggedIn,
@@ -25,12 +26,12 @@ const UserProvider = ({children}) => {
             }}
         >
             {children}
-        </UserContext.Provider>
+        </AuthContext.Provider>
     );
 };
 
 export const useGlobalContext = () => {
-    return useContext(UserContext);
+    return useContext(AuthContext);
 };
 
-export {UserContext, UserProvider};
+export {AuthContext, AuthProvider};
