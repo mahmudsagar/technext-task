@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./style.css";
 
 const PostItem = ({ post }) => {
+    console.log(post);
     const { id, title, body } = post;
     return (
         <div className="card bg-fuchsia">

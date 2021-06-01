@@ -35,11 +35,6 @@ const PostList = () => {
             "https://jsonplaceholder.typicode.com/posts"
         );
         const result = await response.json();
-        // fetch("https://jsonplaceholder.typicode.com/posts")
-        //     .then((response) => response.json())
-        //     .then((result) => {
-        //     })
-        //     .catch((error) => console.log(error));
         setIsLoading(false);
         setPosts(result);
         setPostsToShow(result.slice(0, POST_PER_PAGE));
@@ -48,7 +43,6 @@ const PostList = () => {
     useEffect(() => {
         getData();
     }, []);
-    console.log(postsToShow);
 
     /*
      * Loader showing
