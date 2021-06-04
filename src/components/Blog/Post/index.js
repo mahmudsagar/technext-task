@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { AuthContext, useGlobalContext } from "../../../Context/Context";
 import PostItem from "../PostItem";
 import "./style.css";
 
 const PostList = () => {
+    const { topbarHeight, showSidebar} = useGlobalContext(AuthContext);
+
     // posts
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    // controlled output
+    // controll amount of post to show on a page output
     const [postsToShow, setPostsToShow] = useState(posts);
     const [next, setNext] = useState(10);
     let holdingPosts = [];
@@ -16,7 +19,7 @@ const PostList = () => {
     const handleShowMore = () => {
         loopWithSlice(0, next + POST_PER_PAGE);
         setNext(next + POST_PER_PAGE);
-      };
+    };
 
     /*
      * Slicing Post List
@@ -43,23 +46,26 @@ const PostList = () => {
     useEffect(() => {
         getData();
     }, []);
-
-    /*
-     * Loader showing
-     *
-     */
+    const wrapperPosition = {
+        marginTop: topbarHeight / 16 + 3 + "rem",
+        marginLeft: `${showSidebar ? "13rem" : "1rem"}`,
+        width: `${showSidebar ? "calc(100% - 240px)" : "calc(100% - 50px)"}`,
+        transition: "all ease-in-out .5s",
+    };
 
     if (isLoading) return <div>Please wait a moment.....</div>;
-    /*
-     * Content showing
-     *
-     */ else {
+    else {
         return (
-            <div className="container">
-                {postsToShow.map((post) => {
-                    return <PostItem post={post} key={post.id} />;
-                })}
-                <button onClick={handleShowMore}>Show More</button>
+            <div
+                style={wrapperPosition}
+                className="wrapper"
+            >
+                <div className="container">
+                    {postsToShow.map((post) => {
+                        return <PostItem post={post} key={post.id} />;
+                    })}
+                    <button onClick={handleShowMore}>Show More</button>
+                </div>
             </div>
         );
     }

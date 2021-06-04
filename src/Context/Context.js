@@ -1,28 +1,84 @@
-import React, {createContext, useContext, useEffect, useState} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import useWindowDimensions from "../Hooks/WindowSizeHook";
 
 const AuthContext = createContext();
 
-const AuthProvider = ({children}) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [users, setUsers] = useState([])
+const AuthProvider = ({ children }) => {
+    const {  width } = useWindowDimensions();
 
-
+    /**
+     * For Checking if USer is Logged in
+     * Current user is saved in the Session storage
+     * Initial state is determine by the value of session storage
+     * if browser is closed user is autometically logged out
+     */
+     const [isLoggedIn, setIsLoggedIn] = useState(
+        sessionStorage.getItem("currentUser") ? true : false
+    );
+    const [currentUser, setCurrentUser] = useState(
+        sessionStorage.getItem("currentUser")
+            ? JSON.parse(sessionStorage.getItem("currentUser"))
+            : {}
+    );
+    /**
+     * Storing sidebar width and topbar height to 
+     * dynamically changing container's element width and height
+     */
+    const [showSidebar, setShowSidebar] = useState(width>768 ? true : false);
+    const [topbarHeight, setTopbarHeight] = useState(0);
+    console.log(showSidebar);
+    /**
+     * Data table filtering information are saved in local Strorage 
+     * and initiated in Context to make the code more Readable
+     */
+    // current page tracking
+    const [currentPage, setCurrentPage] = useState(
+        localStorage.getItem("currentPage")
+            ? parseInt(localStorage.getItem("currentPage"))
+            : 1
+    );
+    const [itemPerPage, setItemPerPage] = useState(
+        localStorage.getItem("itemPerPage")
+            ? parseInt(localStorage.getItem("itemPerPage"))
+            : 10
+    );
+    const [search, setSearch] = useState("");
+    const [sorting, setSorting] = useState({ field: "", order: "" });
+    const [sortingOrder, setSortingOrder] = useState(
+        localStorage.getItem("order") ? localStorage.getItem("order") : "asc"
+    );
+    /**
+     * Fetching all users before as we would need to fetch the several times
+     */
+    const [users, setUsers] = useState([]);
     const getUsers = async () => {
-        const response = await fetch("https://jsonplaceholder.typicode.com/users")
-        const result = await response.json()
-        setUsers(result)
-    }
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/users"
+        );
+        const result = await response.json();
+        setUsers(result);
+    };
+    // user fetching ands
     useEffect(() => {
-        getUsers()
-
-    }, [])
-
+        getUsers();
+        width>768 && setShowSidebar(true)
+    }, []);
     return (
         <AuthContext.Provider
             value={{
                 users,
+                currentUser,
                 isLoggedIn,
+                currentPage,
+                sortingOrder,
+                topbarHeight, 
+                showSidebar, 
+                setShowSidebar,
+                setTopbarHeight,
                 setIsLoggedIn,
+                setCurrentUser,
+                setCurrentPage,
+                setSortingOrder,
             }}
         >
             {children}
@@ -34,4 +90,4 @@ export const useGlobalContext = () => {
     return useContext(AuthContext);
 };
 
-export {AuthContext, AuthProvider};
+export { AuthContext, AuthProvider };

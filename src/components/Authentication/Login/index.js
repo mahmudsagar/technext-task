@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useHistory} from 'react-router';
 import {AuthContext, useGlobalContext} from "../../../Context/Context";
 
 const Login = () => {
-    const {isLoggedIn, users, setIsLoggedIn} = useGlobalContext(AuthContext)
+    const {setCurrentUser, users, setIsLoggedIn} = useGlobalContext(AuthContext)
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [isError, setIsError] = useState(false)
@@ -12,25 +12,21 @@ const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault()
-        let currentUser = {};
-        currentUser = users.find((user) => user.email === email && user.username === username)
-        if (currentUser) {
+        let loggedInUser = {};
+        loggedInUser = users.find((user) => user.email === email && user.username === username)
+        if (loggedInUser) {
             setIsLoggedIn(true);
-            sessionStorage.setItem("currentUser", JSON.stringify(currentUser))
-            alert("login success")
-            history.push(`/user/${currentUser.id}`)
+            sessionStorage.setItem("currentUser", JSON.stringify(loggedInUser))
+            setCurrentUser(JSON.parse(sessionStorage.getItem("currentUser")))
+            history.push(`/user/${loggedInUser.id}`)
         } else {
             setIsError(true)
-            alert("information incorrect")
         }
-        // console.log(userInfo)
     }
-    useEffect(() => {
-        sessionStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn))
-    })
     return (
         <div>
             <h1 className={`text-center`}>Let us know Who you are</h1>
+            {isError&& <p className="text-danger text-center">Worng userna or email</p>}
             <div className="mb-3 row">
                 <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
                 <div className="col-sm-10">

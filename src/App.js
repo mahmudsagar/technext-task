@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PostDetails from "./components/Blog/PostDetails";
 import Login from "./components/Authentication/Login";
 import UserProfile from "./components/Users/UserProfile";
+import PrivateRoute from "./components/Authentication/PrivateRoute";
+import TopNavigation from "./components/Navigation/TobNavigation/index";
+import SideNavigation from "./components/Navigation/SideNavigation/index";
 function App() {
     return (
         <Router>
@@ -11,15 +14,21 @@ function App() {
                 <Route path="/login">
                     <Login />
                 </Route>
-                <Route path="/posts/:id">
+                <PrivateRoute path="/posts/:id">
+                    <TopNavigation />
+                    <SideNavigation />
                     <PostDetails />
-                </Route>
-                <Route path="/users/:id">
+                </PrivateRoute>
+                <PrivateRoute path="/user/:id">
+                    <TopNavigation />
+                    <SideNavigation />
                     <UserProfile />
-                </Route>
-                <Route exact path="/">
+                </PrivateRoute>
+                <PrivateRoute exact path="/">
+                    <TopNavigation />
+                    <SideNavigation />
                     <PostList />
-                </Route>
+                </PrivateRoute>
             </Switch>
         </Router>
     );

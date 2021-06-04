@@ -1,0 +1,74 @@
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 9999999;
+    top: 0;
+}
+button{
+    border: none;
+    background-color: transparent;
+    outline: none;
+    padding-left: 0;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+.text{
+    padding: 0 .4rem;
+}
+button :focus{
+    outline: none;
+}
+.dropdown{
+    width: 18rem;
+}
+.dropdown-menu{
+    margin-top: .8rem;
+    transition: all ease-in-out 500ms;
+    opacity: 0;
+    right: 0;
+    visibility: hidden;
+}
+
+li{
+    cursor: pointer;
+}
+.show{
+    visibility: visible;
+    opacity: 1;
+}
+.navbar-toggler{
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .dropdown{
+        width: 46%;
+    }
+    .navbar-toggler{
+        display: inline-block;
+    }
+    .navbar-brand{
+        margin-bottom: 1rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .dropdown{
+        width: 100%;
+    }
+    .navbar {
+        text-align: center;
+    }
+    .navbar-toggler{
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .show{
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .nav-body{
+        display: block !important;
+    }
+}

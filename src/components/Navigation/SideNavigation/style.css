@@ -1,0 +1,36 @@
+.sidebar {
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #13795b;
+    position: fixed;
+    height: 100%;
+    overflow: hidden;
+    z-index: 9999999;
+    transition: all ease-in .5s;
+}
+.navbar-nav{
+    flex-direction: column !important;
+}
+.sidebarClose{
+    margin: 1rem 0 2rem;
+    text-align: end;
+    font-size: 2rem;
+    display: none;
+    margin-left: 140px;
+}
+@media screen and (max-width: 768px) {
+    .sidebar{
+        width: 0;
+        transform: translateX(-350px)
+    }
+    .sidebarClose{
+        display: inline-block;
+    }
+    .showSidNavigation{
+        width: 200px;
+        transform: translateX(0px);
+        
+    }
+}
