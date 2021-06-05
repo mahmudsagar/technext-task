@@ -55,6 +55,7 @@ const UserList = () => {
                     : reversed * (a[sorting.field] - b[sorting.field])
             );
             localStorage.setItem("sortedItem", JSON.stringify(sortedData));
+            console.log("sorting");
         }
 
         if (localStorage.getItem("sortedItem"))
@@ -62,12 +63,12 @@ const UserList = () => {
 
         if (search) {
             computedUsers = computedUsers.filter(
-                (comment) =>
-                    comment.name.toLowerCase().includes(search.toLowerCase()) ||
-                    comment.email
+                (user) =>
+                    user.name.toLowerCase().includes(search.toLowerCase()) ||
+                    user.email
                         .toLowerCase()
                         .includes(search.toLowerCase()) ||
-                    comment.website.toLowerCase().includes(search.toLowerCase())
+                    user.website.toLowerCase().includes(search.toLowerCase())
             );
             setTotalItems(computedUsers.length);
         }
