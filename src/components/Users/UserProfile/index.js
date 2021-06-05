@@ -3,9 +3,11 @@ import { useParams } from "react-router";
 import { AuthContext, useGlobalContext } from "../../../Context/Context";
 import UserPosts from "../../Blog/UserPosts";
 import UserInfo from "../UserData/index";
+import UserList from "../UserList";
 
 const UserProfile = () => {
-    const { users, topbarHeight, showSidebar } = useGlobalContext(AuthContext);
+    const { users, topbarHeight, showSidebar, isLoggedIn, currentUser } =
+        useGlobalContext(AuthContext);
     const { id } = useParams();
     const [user, setUser] = useState({});
     useEffect(() => {
@@ -17,7 +19,6 @@ const UserProfile = () => {
         };
         getUserDetails();
     }, [id, users]);
-
     const wrapperPosition = {
         marginTop: topbarHeight / 16 + 3 + "rem",
         marginLeft: `${showSidebar ? "13rem" : "1rem"}`,
@@ -26,12 +27,42 @@ const UserProfile = () => {
     };
 
     return (
-        <div
-            style={ wrapperPosition  }
-            className="wrapper"
-        >
-            <UserInfo user={user} />
-            <UserPosts id={parseInt(id)} />
+        <div style={wrapperPosition} className="wrapper">
+            <div className="row">
+                <div className="col-md-5 order-2">
+                    <UserInfo user={user} />
+                </div>
+                <div className="col-md-7 order-1">
+                    <div className={`user-post-card card`}>
+                        <h1
+                            style={{
+                                color: "#6c757d",
+                                textShadow: "0 0 3px #ddd",
+                                WebkitTextStroke: "2px #343a40",
+                            }}
+                        >
+                            {user?.name}'s Posts
+                        </h1>
+                        <UserPosts id={parseInt(id)} />
+                    </div>
+                </div>
+            </div>
+            {isLoggedIn && currentUser?.id === user?.id && (
+                <div className={`user-post-card card`}>
+                    <h1
+                            style={{
+                                color: "#6c757d",
+                                textShadow: "0 0 3px #ddd",
+                                WebkitTextStroke: "2px #343a40",
+                            }}
+                        >
+                            All Users
+                        </h1>
+                    <div className="row">
+                        <UserList />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

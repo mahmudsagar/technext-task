@@ -1,13 +1,21 @@
 import React from "react";
 
 const UserInfo = ({ user }) => {
-    // console.log(user)
     return (
         <div className="card">
+            <h1
+                style={{
+                    color: "#6c757d",
+                    textShadow: "0 0 3px #ddd",
+                    WebkitTextStroke: "2px #343a40",
+                }}
+            >
+                About {user?.name}
+            </h1>
             <div className="card-body">
                 <div className="card-title">
-                    <h3>{user?.name}</h3>
-                    <p>{user?.email}</p>
+                    <h3>Name: {user?.name}</h3>
+                    <p>Email: {user?.email}</p>
                 </div>
                 <div className="card-text">
                     <h4>Contact info</h4>

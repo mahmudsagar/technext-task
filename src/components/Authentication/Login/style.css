@@ -1,0 +1,40 @@
+.loginContainer{
+    display: grid;
+    place-items: center;
+}
+
+.loginContainer .col-auto{
+    margin: 0 auto;
+}
+
+
+.loginContainer label{
+    font-size: 1.2rem;
+}
+
+.loginContainer .alert{
+    background-color: #e35d6a;
+    color: #58151c;
+}
+
+.loginContainer .btn{
+    background-color: #290661;
+    color: #fff;
+    text-transform: capitalize;
+    font-size: 1.5rem;
+    border-radius: 1.8rem !important;
+    margin-top: 5px;
+    box-shadow: 1px 3px 5px 0px #6610f2;
+    transform: translateY(-2px);
+    transition: all .8s ease-in;
+}
+.loginContainer .btn:active{
+    box-shadow: none !important;
+    transform: translateY(4px) !important;
+}
+.loginContainer .card{
+    background-color: #29A0B1;
+    color: #2c1a4d;
+    margin-top: 10rem;
+    width: 40rem;
+}

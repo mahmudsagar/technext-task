@@ -1,0 +1,20 @@
+.user-post-card table {
+    font-size: 1.3rem;
+    border: 1px solid #6610f2;
+    padding: .5rem;
+    border-radius: 0 0 1rem 1rem;
+    overflow: hidden;
+}
+
+.user-post-card table a {
+    color: #6610f2;
+    text-decoration: none;
+}
+
+.user-post-table-header {
+    border-radius:  1rem 1rem 0 0;
+    background-color: #6610f2;
+}
+.user-post-table-header .btn {
+    color: #fff;
+}

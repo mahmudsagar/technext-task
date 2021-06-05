@@ -7,6 +7,7 @@ import UserProfile from "./components/Users/UserProfile";
 import PrivateRoute from "./components/Authentication/PrivateRoute";
 import TopNavigation from "./components/Navigation/TobNavigation/index";
 import SideNavigation from "./components/Navigation/SideNavigation/index";
+import PostForm from './components/Blog/PostForm/index';
 function App() {
     return (
         <Router>
@@ -18,6 +19,16 @@ function App() {
                     <TopNavigation />
                     <SideNavigation />
                     <PostDetails />
+                </PrivateRoute>
+                <PrivateRoute path="/new_post">
+                    <TopNavigation />
+                    <SideNavigation />
+                    <PostForm />
+                </PrivateRoute>
+                <PrivateRoute path="/edit_post/:id">
+                    <TopNavigation />
+                    <SideNavigation />
+                    <PostForm />
                 </PrivateRoute>
                 <PrivateRoute path="/user/:id">
                     <TopNavigation />

@@ -13,10 +13,10 @@ const TopNavigation = () => {
         setTopbarHeight(navRef.current.clientHeight);
     }, [setTopbarHeight]);
     return (
-        <nav ref={navRef} className="navbar navbar-light bg-light">
+        <nav ref={navRef} className="navbar navbar-light">
             <div className="container nav-body">
                 <Link to="/" className="navbar-brand">
-                    Navbar
+                    Technext Assignment
                 </Link>
 
                 <div className="dropdown">

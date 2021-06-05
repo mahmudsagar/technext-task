@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./style.css";
 
-const PaginationComponent = ({
+const PostPaginationComponent = ({
     total = 0,
     itemsPerPage = 10,
     currentPage = 1,
@@ -20,8 +20,8 @@ const PaginationComponent = ({
             pages.push(
                 <li
                     className={`page-item ${
-                       localStorage.getItem("currentPage")
-                            ? parseInt(localStorage.getItem("currentPage")) ===
+                       localStorage.getItem("currentPostPage")
+                            ? parseInt(localStorage.getItem("currentPostPage")) ===
                                   i && "active"
                             : currentPage === i && "active"
                     }`}
@@ -68,4 +68,4 @@ const PaginationComponent = ({
     );
 };
 
-export default PaginationComponent;
+export default PostPaginationComponent;

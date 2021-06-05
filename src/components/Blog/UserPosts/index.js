@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import PaginationComponent from "../../DataTable/Pagination";
-import TableHeader from "../../DataTable/Header/index";
+import TableHeader from "../../DataTable/Header";
 import { AuthContext, useGlobalContext } from "../../../Context/Context";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-
+import "./style.css";
+import PostPaginationComponent from "../../DataTable/Pagination/PostPagination";
 const UserPosts = ({ id }) => {
-    const { currentUser, isLoggedIn, currentPage, setCurrentPage } =
+    const { currentUser, isLoggedIn, currentPostPage, setCurrentPostPage } =
         useGlobalContext(AuthContext);
     const [posts, setPosts] = useState([]);
     const [totalItems, setTotalItems] = useState(0);
@@ -20,55 +21,70 @@ const UserPosts = ({ id }) => {
                 });
         };
         getUserPosts();
-        setCurrentPage(
-            localStorage.getItem("currentPage")
-                ? parseInt(localStorage.getItem("currentPage"))
+        setCurrentPostPage(
+            localStorage.getItem("currentPostPage")
+                ? parseInt(localStorage.getItem("currentPostPage"))
                 : 1
         );
-    }, [id, setCurrentPage]);
+    }, [id, setCurrentPostPage]);
 
     const headers = [
-        { name: "No#", field: "id", sortable: false },
         { name: "Title", field: "title", sortable: false },
-        { name: "body", field: "body", sortable: false },
+        { name: "Body", field: "body", sortable: false },
     ];
+    const removeItem = (id) => {
+        fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+            method: "DELETE",
+        }).then(() => setPosts(posts.filter((post) => post.id !== id)));
+    };
 
     const postData = useMemo(() => {
         let computedPosts = posts;
         setTotalItems(posts.length);
 
         return computedPosts.slice(
-            (currentPage - 1) * ITEM_PER_PAGE,
-            (currentPage - 1) * ITEM_PER_PAGE + ITEM_PER_PAGE
+            (currentPostPage - 1) * ITEM_PER_PAGE,
+            (currentPostPage - 1) * ITEM_PER_PAGE + ITEM_PER_PAGE
         );
-    }, [posts, currentPage, ITEM_PER_PAGE]);
-    // console.log(posts);
+    }, [posts, currentPostPage, ITEM_PER_PAGE]);
+
     return (
-        <div>
             <div className="container py-3">
                 <div className="row">
-                    <div className={`col-md-12`}>
-                        <PaginationComponent
-                            total={totalItems}
-                            itemsPerPage={ITEM_PER_PAGE}
-                            currentPage={currentPage}
-                            onPageChange={(page) => {
-                                localStorage.setItem("currentPage", page);
-                                setCurrentPage(page);
-                            }}
-                        />
+                    <div className="user-post-table-header py-2">
+                        <div className="row align-items-center">
+                            <div className={`col-md-8`}>
+                                <PostPaginationComponent
+                                    total={totalItems}
+                                    itemsPerPage={ITEM_PER_PAGE}
+                                    currentPage={currentPostPage}
+                                    onPageChange={(page) => {
+                                        localStorage.setItem(
+                                            "currentPostPage",
+                                            page
+                                        );
+                                        setCurrentPostPage(page);
+                                    }}
+                                />
+                            </div>
+                            <div className={`col-md-4`}>
+                                <Link
+                                    to={`/new_post/`}
+                                    className="btn btn-primary float-end"
+                                >
+                                    Create a new post
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="row">
-                    <table className="table table-striped">
-                        <TableHeader headers={headers} />
+                    <table className="table table-primary table-striped">
+                        <TableHeader headers={headers} id={id} />
                         <tbody>
                             {postData.map((post, index) => {
                                 return (
                                     <tr key={index}>
-                                        <th scope="row" className="text-center">
-                                            {index + 1}
-                                        </th>
                                         <td>
                                             <Link to={`/posts/${post.id}`}>
                                                 {post.title}
@@ -79,10 +95,21 @@ const UserPosts = ({ id }) => {
                                             <td>
                                                 <div className="row">
                                                     <div className="col-md-6">
-                                                        <FaEdit />
+                                                        <Link
+                                                            to={`/edit_post/${post.id}`}
+                                                        >
+                                                            <FaEdit className="text-success"/>
+                                                        </Link>
                                                     </div>
                                                     <div className="col-md-6">
-                                                        <FaTrashAlt />
+                                                        <FaTrashAlt
+                                                            onClick={() =>
+                                                                removeItem(
+                                                                    post.id
+                                                                )
+                                                            }
+                                                            className={`remove text-danger`}
+                                                        />
                                                     </div>
                                                 </div>
                                             </td>
@@ -94,7 +121,6 @@ const UserPosts = ({ id }) => {
                     </table>
                 </div>
             </div>
-        </div>
     );
 };
 

@@ -1,6 +1,9 @@
 body{
     background-color: #DDFFE7;
 }
+.remove{
+    cursor: pointer;
+}
 .wrapper{
     overflow: hidden;
 }

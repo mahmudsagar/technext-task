@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 import { AuthContext, useGlobalContext } from "../../../Context/Context";
-const TableHeader = ({ headers, onSorting }) => {
-    const { sortingOrder, setSortingOrder } = useGlobalContext(AuthContext);
+const TableHeader = ({ headers, onSorting, id }) => {
+    const { currentUser, sortingOrder, setSortingOrder } = useGlobalContext(AuthContext);
     const [sortingField, setSortingField] = useState("");
 
     const onSortingChange = (field) => {
@@ -33,6 +33,7 @@ const TableHeader = ({ headers, onSorting }) => {
                             ))}
                     </th>
                 ))}
+                {currentUser.id == id && <th>Action</th>}
             </tr>
         </thead>
     );

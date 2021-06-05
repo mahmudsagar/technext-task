@@ -4,9 +4,10 @@ import { AuthContext, useGlobalContext } from "../../../Context/Context";
 import Comments from "../../Comments";
 
 const PostDetails = () => {
-    const { topbarHeight, showSidebar } = useGlobalContext(AuthContext);
+    const { users, topbarHeight, showSidebar } = useGlobalContext(AuthContext);
     const { id } = useParams();
     const [post, setPost] = useState({});
+    const [user, setUser] = useState({})
 
     const wrapperPosition = {
         marginTop: topbarHeight / 16 + 3 + "rem",
@@ -21,14 +22,17 @@ const PostDetails = () => {
             );
             const result = await response.json();
             setPost(result);
+            setUser(users.find((user)=> user.id === result.userId))
         };
         getData();
     }, [id]);
+    console.log(user);
     return (
         <div style={wrapperPosition} className="wrapper">
             <div className="card">
                 <span className="h3">{id}</span>
                 <h2>Title: {post.title}</h2>
+                <strong>Author: {user?.name}</strong>
                 <p className="card-text">{post.body}</p>
             </div>
             <hr />

@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import useWindowDimensions from "../Hooks/WindowSizeHook";
 
+// @ts-ignore
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const {  width } = useWindowDimensions();
+    const { width } = useWindowDimensions();
 
     /**
      * For Checking if USer is Logged in
@@ -12,7 +13,7 @@ const AuthProvider = ({ children }) => {
      * Initial state is determine by the value of session storage
      * if browser is closed user is autometically logged out
      */
-     const [isLoggedIn, setIsLoggedIn] = useState(
+    const [isLoggedIn, setIsLoggedIn] = useState(
         sessionStorage.getItem("currentUser") ? true : false
     );
     const [currentUser, setCurrentUser] = useState(
@@ -21,16 +22,21 @@ const AuthProvider = ({ children }) => {
             : {}
     );
     /**
-     * Storing sidebar width and topbar height to 
+     * Storing sidebar width and topbar height to
      * dynamically changing container's element width and height
      */
-    const [showSidebar, setShowSidebar] = useState(width>768 ? true : false);
+    const [showSidebar, setShowSidebar] = useState(width > 768 ? true : false);
     const [topbarHeight, setTopbarHeight] = useState(0);
-    console.log(showSidebar);
     /**
-     * Data table filtering information are saved in local Strorage 
+     * Data table filtering information are saved in local Strorage
      * and initiated in Context to make the code more Readable
      */
+    // current page tracking for Posts
+    const [currentPostPage, setCurrentPostPage] = useState(
+        localStorage.getItem("currentPostPage")
+            ? parseInt(localStorage.getItem("currentPostPage"))
+            : 1
+    );
     // current page tracking
     const [currentPage, setCurrentPage] = useState(
         localStorage.getItem("currentPage")
@@ -61,7 +67,12 @@ const AuthProvider = ({ children }) => {
     // user fetching ands
     useEffect(() => {
         getUsers();
-        width>768 && setShowSidebar(true)
+        setCurrentPostPage(
+            localStorage.getItem("currentPostPage")
+                ? parseInt(localStorage.getItem("currentPostPage"))
+                : 1
+        );
+        width > 768 && setShowSidebar(true);
     }, []);
     return (
         <AuthContext.Provider
@@ -69,14 +80,22 @@ const AuthProvider = ({ children }) => {
                 users,
                 currentUser,
                 isLoggedIn,
+                currentPostPage,
                 currentPage,
                 sortingOrder,
-                topbarHeight, 
-                showSidebar, 
+                topbarHeight,
+                showSidebar,
+                itemPerPage,
+                search,
+                sorting,
+                setItemPerPage,
+                setSearch,
                 setShowSidebar,
+                setSorting,
                 setTopbarHeight,
                 setIsLoggedIn,
                 setCurrentUser,
+                setCurrentPostPage,
                 setCurrentPage,
                 setSortingOrder,
             }}

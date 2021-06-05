@@ -3,6 +3,7 @@
     width: 100%;
     z-index: 9999999;
     top: 0;
+    background-color: #3d8bfd;
 }
 button{
     border: none;

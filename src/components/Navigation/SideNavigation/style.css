@@ -3,17 +3,28 @@
     margin: 0;
     padding: 0;
     width: 200px;
-    background-color: #13795b;
+    background-color: #0d6efd;
     position: fixed;
     height: 100%;
     overflow: hidden;
     z-index: 9999999;
-    transition: all ease-in .5s;
+    transition: all ease-in 0.5s;
 }
-.navbar-nav{
+.sidebar .nav-link {
+    color: #fff;
+    font-size: 1.3rem;
+}
+.sidebar .active {
+    background-color: #79dfc1;
+    border-radius: 0.8rem;
+    color: #000;
+}
+
+.sidebar .navbar-nav {
     flex-direction: column !important;
+    padding: 3rem 0;
 }
-.sidebarClose{
+.sidebarClose {
     margin: 1rem 0 2rem;
     text-align: end;
     font-size: 2rem;
@@ -21,16 +32,15 @@
     margin-left: 140px;
 }
 @media screen and (max-width: 768px) {
-    .sidebar{
+    .sidebar {
         width: 0;
-        transform: translateX(-350px)
+        transform: translateX(-350px);
     }
-    .sidebarClose{
+    .sidebarClose {
         display: inline-block;
     }
-    .showSidNavigation{
+    .showSidNavigation {
         width: 200px;
         transform: translateX(0px);
-        
     }
 }

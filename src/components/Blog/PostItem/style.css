@@ -1,9 +1,10 @@
 .card{
     padding: .8rem 1rem;
     margin: 1rem 0;
-    box-shadow: 1px 1px 10px 0px #ddd;
-    background-color: #29A0B1;
-    border: 2px solid #167D7F;
+    box-shadow: 1px 1px 7px 1px #0d503c;
+    background-color: #79dfc1;
+    border: 2px solid #0d503c;
+    border-radius: 1rem;
 }
 .card a{
  color: #2F5233;

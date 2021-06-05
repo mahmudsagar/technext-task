@@ -4,7 +4,7 @@ import PostItem from "../PostItem";
 import "./style.css";
 
 const PostList = () => {
-    const { topbarHeight, showSidebar} = useGlobalContext(AuthContext);
+    const { topbarHeight, showSidebar } = useGlobalContext(AuthContext);
 
     // posts
     const [posts, setPosts] = useState([]);
@@ -41,6 +41,7 @@ const PostList = () => {
         setIsLoading(false);
         setPosts(result);
         setPostsToShow(result.slice(0, POST_PER_PAGE));
+
     };
 
     useEffect(() => {
@@ -53,18 +54,27 @@ const PostList = () => {
         transition: "all ease-in-out .5s",
     };
 
-    if (isLoading) return <div>Please wait a moment.....</div>;
+    if (isLoading)
+        return (
+            <div style={wrapperPosition} className="wrapper">
+                Please wait a moment.....
+            </div>
+        );
     else {
         return (
-            <div
-                style={wrapperPosition}
-                className="wrapper"
-            >
+            <div style={wrapperPosition} className="wrapper">
                 <div className="container">
                     {postsToShow.map((post) => {
                         return <PostItem post={post} key={post.id} />;
                     })}
-                    <button onClick={handleShowMore}>Show More</button>
+                    <div className="text-center">
+                        <button
+                            onClick={handleShowMore}
+                            className="btn btn-outline-success btn-primary rounded-pill mb-5 px-4 py-2 text-center text-white"
+                        >
+                            Show More
+                        </button>
+                    </div>
                 </div>
             </div>
         );
