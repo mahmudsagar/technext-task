@@ -1,13 +1,13 @@
 import "./App.css";
-import PostList from "./components/Blog/Post";
+import PostList from "./components/Posts/Post";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import PostDetails from "./components/Blog/PostDetails";
-import Login from "./components/Authentication/Login";
+import PostDetails from "./components/Posts/PostDetails";
+import Login from "./components/AuthAndPrivateRouting/Login";
 import UserProfile from "./components/Users/UserProfile";
-import PrivateRoute from "./components/Authentication/PrivateRoute";
+import PrivateRoute from "./components/AuthAndPrivateRouting/PrivateRoute";
 import TopNavigation from "./components/Navigation/TobNavigation/index";
 import SideNavigation from "./components/Navigation/SideNavigation/index";
-import PostForm from './components/Blog/PostForm/index';
+import PostForm from './components/Posts/PostForm/index';
 function App() {
     return (
         <Router>

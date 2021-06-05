@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext, useGlobalContext } from "../../../Context/Context";
-import PaginationComponent from "../../DataTable/Pagination";
-import TableHeader from "../../DataTable/Header";
-import PerPageItem from "../../DataTable/ItemPerPage";
-import Search from "../../DataTable/Search";
+import PaginationComponent from "../../DataTableHelper/Pagination";
+import TableHeader from "../../DataTableHelper/Header";
+import PerPageItem from "../../DataTableHelper/ItemPerPage";
+import Search from "../../DataTableHelper/Search";
 import "./style.css";
 
 const UserList = () => {
@@ -35,7 +35,7 @@ const UserList = () => {
     }, []);
 
     const headers = [
-        { name: "No#", field: "id", sortable: true },
+        { name: "No#", field: "id", sortable: false },
         { name: "Name", field: "name", sortable: true },
         { name: "Email", field: "email", sortable: true },
         { name: "Website", field: "website", sortable: false },
@@ -96,7 +96,8 @@ const UserList = () => {
                         <PerPageItem
                             onItemChange={(value) => {
                                 setItemPerPage(parseInt(value));
-                                console.log(itemPerPage);
+                                setCurrentPage(1)
+                                localStorage.setItem('currentPage', "1")
                             }}
                             totalItems = {totalItems}
                         />

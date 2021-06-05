@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { AuthContext, useGlobalContext } from "../../../Context/Context";
-import UserPosts from "../../Blog/UserPosts";
-import UserInfo from "../UserData/index";
+import UserPosts from "../UserPosts";
+import UserInfo from "../UserInfo/index";
 import UserList from "../UserList";
 
 const UserProfile = () => {

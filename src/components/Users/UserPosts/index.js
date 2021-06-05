@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import PaginationComponent from "../../DataTable/Pagination";
-import TableHeader from "../../DataTable/Header";
-import { AuthContext, useGlobalContext } from "../../../Context/Context";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import "./style.css";
-import PostPaginationComponent from "../../DataTable/Pagination/PostPagination";
+import { AuthContext, useGlobalContext } from "../../../Context/Context";
+import TableHeader from "../../DataTableHelper/Header";
+import  PostPaginationComponent  from '../../DataTableHelper/Pagination/PostPagination';
+import './style.css'
 const UserPosts = ({ id }) => {
     const { currentUser, isLoggedIn, currentPostPage, setCurrentPostPage } =
         useGlobalContext(AuthContext);
