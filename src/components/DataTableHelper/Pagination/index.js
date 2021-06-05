@@ -3,13 +3,15 @@ import "./style.css";
 
 const PaginationComponent = ({
     total = 0,
-    itemsPerPage = 10,
+    itemsPerPage,
     currentPage = 1,
     onPageChange,
 }) => {
     const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
+        if(itemsPerPage == total)
+            currentPage = 1
         if (total > 0 && itemsPerPage > 0)
             setTotalPages(Math.ceil(total / itemsPerPage));
     }, [total, itemsPerPage]);
@@ -34,7 +36,6 @@ const PaginationComponent = ({
         }
         return pages;
     }, [totalPages, currentPage, onPageChange]);
-
     if (totalPages === 0) return null;
 
     return (

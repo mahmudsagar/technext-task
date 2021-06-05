@@ -1,28 +1,26 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
+import { AuthContext, useGlobalContext } from "../../../Context/Context";
 
 const PerPageItem = ({ onItemChange, totalItems }) => {
-    const [itemPerPage, setItemPerPage] = useState(
-        localStorage.getItem("itemPerPage")
-            ? localStorage.getItem("itemPerPage")
-            : ""
-    );
+    const {itemPerPage, setItemPerPage} = useGlobalContext(AuthContext)
 
     const onChanging = (value) => {
         setItemPerPage(value);
         localStorage.setItem("itemPerPage", value);
-        onItemChange(value ? value : 50);
+
+        onItemChange(value ? value : 10);
     };
     useEffect(() => {
-        onItemChange(
-            localStorage.getItem("itemPerPage")
-                ? localStorage.getItem("itemPerPage")
-                : 50
-        );
+        // onItemChange(
+        //     localStorage.getItem("itemPerPage")
+        //         ? localStorage.getItem("itemPerPage")
+        //         : 10
+        // );
     }, []);
     const optionsForRows = useMemo(() => {
         const option = [];
         for (let i = 1; i <= totalItems; i++) {
-            option.push(<option selected={parseInt(itemPerPage) === i} value={i}>{i}</option>);
+            option.push(<option key={i}  value={i}>{i}</option>);
         }
         return option;
     }, [totalItems]);
@@ -30,11 +28,11 @@ const PerPageItem = ({ onItemChange, totalItems }) => {
     return (
         <select
             className="form-select"
-            value={itemPerPage}
+            defaultValue={itemPerPage}
             onChange={(e) => onChanging(e.target.value)}
             aria-label="Default select"
         >
-            <option selected value={totalItems}>
+            <option value={totalItems}>
                 All
             </option>
             {optionsForRows}

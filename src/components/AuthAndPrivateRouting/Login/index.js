@@ -30,6 +30,10 @@ const Login = () => {
         <div className="container loginContainer">
             <div className="card">
                 <h1 className={`text-center p-5 mb-5 display-6 text-capitalize`}>Let us know Who you are</h1>
+                <small>You can use any user from jsonplaceholder user endpoint <br />
+                but to make thing easy here is User 2:
+                Username: Antonette, Email: Shanna@melissa.tv
+                </small>
                 {isError && (
                     <p className="text-center text-capitalize alert">
                         Worng username or email

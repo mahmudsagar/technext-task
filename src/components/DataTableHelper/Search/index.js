@@ -5,6 +5,7 @@ const Search = ({onSearch}) => {
 
     const onInputChange=(value)=>{
         localStorage.setItem("search", value)
+        localStorage.setItem('currentPage', "1")
         setSearch(value)
         onSearch(value)
     }
