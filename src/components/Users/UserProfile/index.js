@@ -19,6 +19,7 @@ const UserProfile = () => {
         };
         getUserDetails();
     }, [id, users]);
+    // style to set size and resize of Main container or wrapper
     const wrapperPosition = {
         marginTop: topbarHeight / 16 + 3 + "rem",
         marginLeft: `${showSidebar ? "13rem" : "1rem"}`,
@@ -28,10 +29,12 @@ const UserProfile = () => {
 
     return (
         <div style={wrapperPosition} className="wrapper">
+            {/* user details */}
             <div className="row">
                 <div className="col-md-5 order-2">
                     <UserInfo user={user} />
                 </div>
+                {/* Post table containing users Posts */}
                 <div className="col-md-7 order-1">
                     <div className={`user-post-card card`}>
                         <h1
@@ -47,6 +50,7 @@ const UserProfile = () => {
                     </div>
                 </div>
             </div>
+            {/* showing all other users to current user */}
             {isLoggedIn && currentUser?.id === user?.id && (
                 <div className={`user-post-card card`}>
                     <h1

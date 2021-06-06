@@ -10,13 +10,6 @@ const PerPageItem = ({ onItemChange, totalItems }) => {
 
         onItemChange(value ? value : 10);
     };
-    useEffect(() => {
-        // onItemChange(
-        //     localStorage.getItem("itemPerPage")
-        //         ? localStorage.getItem("itemPerPage")
-        //         : 10
-        // );
-    }, []);
     const optionsForRows = useMemo(() => {
         const option = [];
         for (let i = 1; i <= totalItems; i++) {

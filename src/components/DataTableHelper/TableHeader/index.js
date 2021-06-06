@@ -35,7 +35,7 @@ const TableHeader = ({ headers, onSorting, id }) => {
                     </th>
                 ))}
                 {/* show updat and delete actions if list belongs to is current user                  */}
-                {currentUser.id == id && <th>Action</th>}
+                {currentUser.id === id && <th>Action</th>}
             </tr>
         </thead>
     );

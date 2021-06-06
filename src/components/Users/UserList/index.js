@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext, useGlobalContext } from "../../../Context/Context";
 import PaginationComponent from "../../DataTableHelper/Pagination";
-import TableHeader from "../../DataTableHelper/Header";
+import TableHeader from "../../DataTableHelper/TableHeader";
 import PerPageItem from "../../DataTableHelper/ItemPerPage";
 import Search from "../../DataTableHelper/Search";
 import "./style.css";
@@ -11,21 +11,16 @@ const UserList = () => {
     const {
         users,
         currentPage,
-        setCurrentPage,
         sorting,
         search,
         itemPerPage,
+        setCurrentPage,
         setItemPerPage,
         setSearch,
         setSorting,
     } = useGlobalContext(AuthContext);
     const [totalItems, setTotalItems] = useState(0);
 
-    // const handlefilter = (e) => {
-    //     e.preventDefault();
-    //     localStorage.clear();
-    //     window.location.reload();
-    // };
     useEffect(() => {
         setCurrentPage(
             localStorage.getItem("currentPage")
@@ -33,7 +28,7 @@ const UserList = () => {
                 : 1
         );
     }, []);
-
+    // Fields that are to be shown on table Header
     const headers = [
         { name: "No#", field: "id", sortable: false },
         { name: "Name", field: "name", sortable: true },
@@ -41,10 +36,10 @@ const UserList = () => {
         { name: "Website", field: "website", sortable: false },
     ];
 
-    const commentsData = useMemo(() => {
+    const usersData = useMemo(() => {
         let computedUsers = users;
         setTotalItems(users.length);
-
+        // Shows item on either ascending or descending order depending on selection
         if (sorting.field) {
             const reversed = sorting.order === "asc" ? 1 : -1;
             let sortedData = [];
@@ -60,7 +55,7 @@ const UserList = () => {
 
         if (localStorage.getItem("sortedItem"))
             computedUsers = JSON.parse(localStorage.getItem("sortedItem"));
-
+        // Shows searched Items if  seach input has a value
         if (search) {
             computedUsers = computedUsers.filter(
                 (user) =>
@@ -70,6 +65,7 @@ const UserList = () => {
             );
             setTotalItems(computedUsers.length);
         }
+        //retun Items accroding to the selected number of rows
         return computedUsers.slice(
             (currentPage - 1) * itemPerPage,
             (currentPage - 1) * itemPerPage + itemPerPage
@@ -111,35 +107,37 @@ const UserList = () => {
                 </div>
                 <div className="row">
                     <table>
+                        {/* Table header is loading dynamically You can Find  DataTable Helper*/}
                         <TableHeader
                             headers={headers}
                             onSorting={(field, order) =>
                                 setSorting({ field, order })
                             }
                         />
+                        {/* List of Users on table */}
                         <tbody>
-                            {commentsData.map((comment, index) => {
+                            {usersData.map((user, index) => {
                                 return (
                                     <tr key={index}>
                                         <th scope="row" className="text-center">
-                                            {comment.id}
-                                            {/* {console.log(typeof(String(comment.id)))} */}
+                                            {user.id}
                                         </th>
                                         <td>
                                             <Link
-                                                to={`/user/${comment.id}`}
-                                                onClick={() =>
+                                                to={`/user/${user.id}`}
+                                                onClick={() => {
                                                     localStorage.removeItem(
                                                         "currentPostPage"
-                                                    )
-                                                }
+                                                    );
+                                                    window.scrollTo(0, 0);
+                                                }}
                                             >
-                                                {comment.name}
+                                                {user.name}
                                             </Link>
                                         </td>
-                                        <td>{comment.email}</td>
-                                        <td>{comment.username}</td>
-                                        <td>{comment.website}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.username}</td>
+                                        <td>{user.website}</td>
                                     </tr>
                                 );
                             })}

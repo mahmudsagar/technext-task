@@ -7,8 +7,9 @@ const PostDetails = () => {
     const { users, topbarHeight, showSidebar } = useGlobalContext(AuthContext);
     const { id } = useParams();
     const [post, setPost] = useState({});
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({});
 
+    // Fetching data to set input value initially in case of update
     const wrapperPosition = {
         marginTop: topbarHeight / 16 + 3 + "rem",
         marginLeft: `${showSidebar ? "13rem" : "1rem"}`,
@@ -22,11 +23,11 @@ const PostDetails = () => {
             );
             const result = await response.json();
             setPost(result);
-            setUser(users.find((user)=> user.id === result.userId))
+            // to find the Author of the post
+            setUser(users.find((user) => user.id === result.userId));
         };
         getData();
     }, [id]);
-    console.log(user);
     return (
         <div style={wrapperPosition} className="wrapper">
             <div className="card">

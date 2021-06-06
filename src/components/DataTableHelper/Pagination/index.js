@@ -10,19 +10,18 @@ const PaginationComponent = ({
     const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
-        if(itemsPerPage == total)
-            currentPage = 1
+        if (itemsPerPage == total) currentPage = 1;
         if (total > 0 && itemsPerPage > 0)
             setTotalPages(Math.ceil(total / itemsPerPage));
     }, [total, itemsPerPage]);
-
+    // showng and changing active page number
     const pageinationItems = useMemo(() => {
         const pages = [];
         for (let i = 1; i <= totalPages; i++) {
             pages.push(
                 <li
                     className={`page-item ${
-                       localStorage.getItem("currentPage")
+                        localStorage.getItem("currentPage")
                             ? parseInt(localStorage.getItem("currentPage")) ===
                                   i && "active"
                             : currentPage === i && "active"

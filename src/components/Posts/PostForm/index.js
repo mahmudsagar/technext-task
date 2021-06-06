@@ -4,12 +4,19 @@ import { AuthContext, useGlobalContext } from "../../../Context/Context";
 import Alert from "./Alert";
 
 const PostForm = () => {
+    /**
+     * Post id is expectd only for editing
+     * If id exists that means user want to update post 
+     * if not then user wants to create a new post
+     */
     const { id } = useParams();
     const { topbarHeight, showSidebar, currentUser } =
         useGlobalContext(AuthContext);
     const [result, setResult] = useState({});
+    // input states
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
+    // alerts messages
     const [alert, setAlert] = useState({
         show: false,
         msg: "",
@@ -20,7 +27,9 @@ const PostForm = () => {
         e.preventDefault();
         if (!title && !body) {
             showAlert(true, "danger", "please enter a value");
-        } else if (title && body && id) {
+        } 
+        // Update Handler
+        else if (title && body && id) {
             fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
                 method: "PUT",
                 body: JSON.stringify({
@@ -41,7 +50,9 @@ const PostForm = () => {
             setTitle("");
             setBody("");
             showAlert(true, "success", "value changed");
-        } else {
+        } 
+        // Create Handler
+        else {
             fetch("https://jsonplaceholder.typicode.com/posts", {
                 method: "POST",
                 body: JSON.stringify({
@@ -67,6 +78,7 @@ const PostForm = () => {
         setAlert({ show, type, msg });
     };
     useEffect(() => {
+        // Fetching data to set input value initially in case of update
         fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
             .then((response) => response.json())
             .then((json) => {
@@ -74,7 +86,7 @@ const PostForm = () => {
                 setBody(json.body);
             });
     }, [id]);
-
+    // style to set size and resize of Main container or wrapper
     const wrapperPosition = {
         marginTop: topbarHeight / 16 + 3 + "rem",
         marginLeft: `${showSidebar ? "13rem" : "1rem"}`,
@@ -121,6 +133,9 @@ const PostForm = () => {
                     {id ? "edit" : "submit"}
                 </button>
             </form>
+            {/**
+             * Show the data if Updating or Creating is successfull
+             */}
             {success && (
                 <div className="result bg-primary mt-4 p-3 rounded">
                     <p className="text-warning">

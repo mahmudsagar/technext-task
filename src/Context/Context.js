@@ -8,7 +8,7 @@ const AuthProvider = ({ children }) => {
     const { width } = useWindowDimensions();
 
     /**
-     * For Checking if USer is Logged in
+     * For Checking if User is Logged in
      * Current user is saved in the Session storage
      * Initial state is determine by the value of session storage
      * if browser is closed user is autometically logged out
@@ -37,18 +37,30 @@ const AuthProvider = ({ children }) => {
             ? parseInt(localStorage.getItem("currentPostPage"))
             : 1
     );
-    // current page tracking
+    // current page on user Table tracking
     const [currentPage, setCurrentPage] = useState(
         localStorage.getItem("currentPage")
             ? parseInt(localStorage.getItem("currentPage"))
             : 1
     );
+    // Save item to show per page on user table
     const [itemPerPage, setItemPerPage] = useState(
         localStorage.getItem("itemPerPage")
             ? parseInt(localStorage.getItem("itemPerPage"))
             : 10
     );
+
+    /**
+     * Save searched item to show on user table
+     * if already seached once then it will save the data and 
+     * show the data even if page reloads if searched value not changed or removed
+     */
     const [search, setSearch] = useState("");
+    /**
+     * Save soreted order to show on user table
+     * if already sorted once then it will save the data and 
+     * show the data even if page reloads if sort value not changed or removed
+     */
     const [sorting, setSorting] = useState({ field: "", order: "" });
     const [sortingOrder, setSortingOrder] = useState(
         localStorage.getItem("order") ? localStorage.getItem("order") : "asc"
@@ -72,6 +84,12 @@ const AuthProvider = ({ children }) => {
                 ? parseInt(localStorage.getItem("currentPostPage"))
                 : 1
         );
+        /**
+         * 
+         * tranking window size to show the side in bigeer screen by default
+         * sidebar will hide itself if device is small
+         * 
+         */
         width > 768 && setShowSidebar(true);
     }, []);
     return (
@@ -83,21 +101,21 @@ const AuthProvider = ({ children }) => {
                 currentPostPage,
                 currentPage,
                 sortingOrder,
-                topbarHeight,
-                showSidebar,
                 itemPerPage,
                 search,
                 sorting,
+                topbarHeight,
+                showSidebar,
                 setItemPerPage,
                 setSearch,
-                setShowSidebar,
                 setSorting,
-                setTopbarHeight,
                 setIsLoggedIn,
                 setCurrentUser,
                 setCurrentPostPage,
                 setCurrentPage,
                 setSortingOrder,
+                setTopbarHeight,
+                setShowSidebar,
             }}
         >
             {children}

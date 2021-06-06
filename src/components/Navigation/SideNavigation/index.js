@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AuthContext, useGlobalContext } from "../../../Context/Context";
 import { GrClose } from "react-icons/gr";
 import "./style.css";

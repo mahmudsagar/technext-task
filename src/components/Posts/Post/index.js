@@ -41,12 +41,13 @@ const PostList = () => {
         setIsLoading(false);
         setPosts(result);
         setPostsToShow(result.slice(0, POST_PER_PAGE));
-
     };
 
     useEffect(() => {
         getData();
     }, []);
+
+    // Fetching data to set input value initially in case of update
     const wrapperPosition = {
         marginTop: topbarHeight / 16 + 3 + "rem",
         marginLeft: `${showSidebar ? "13rem" : "1rem"}`,
@@ -64,6 +65,11 @@ const PostList = () => {
         return (
             <div style={wrapperPosition} className="wrapper">
                 <div className="container">
+                    {/**
+                     *  lIST OF all Posts 
+                     * 10 at a time 
+                     * Can icrease the item bu Clicking Show more 
+                     * */}
                     {postsToShow.map((post) => {
                         return <PostItem post={post} key={post.id} />;
                     })}
