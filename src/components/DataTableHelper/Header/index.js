@@ -4,7 +4,7 @@ import { AuthContext, useGlobalContext } from "../../../Context/Context";
 const TableHeader = ({ headers, onSorting, id }) => {
     const { currentUser, sortingOrder, setSortingOrder } = useGlobalContext(AuthContext);
     const [sortingField, setSortingField] = useState("");
-
+    //HAndling ascending & descending Order Sorting
     const onSortingChange = (field) => {
         const order =
             field === sortingField && sortingOrder === "asc" ? "desc" : "asc";
@@ -25,6 +25,7 @@ const TableHeader = ({ headers, onSorting, id }) => {
                         }
                     >
                         {name}
+                    //show Sort icon
                         {sortable &&
                             (localStorage.getItem("order") === "desc" ? (
                                 <BsArrowUp />
@@ -33,6 +34,7 @@ const TableHeader = ({ headers, onSorting, id }) => {
                             ))}
                     </th>
                 ))}
+                // show updat and delete actions if list belongs to is current user                 
                 {currentUser.id == id && <th>Action</th>}
             </tr>
         </thead>
