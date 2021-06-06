@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { AuthContext, useGlobalContext } from "../../../Context/Context";
 import Comments from "../../Comments";
 
@@ -31,10 +32,10 @@ const PostDetails = () => {
     return (
         <div style={wrapperPosition} className="wrapper">
             <div className="card">
-                <span className="h3">{id}</span>
                 <h2>Title: {post.title}</h2>
                 <strong>Author: {user?.name}</strong>
                 <p className="card-text">{post.body}</p>
+                <Link className="btn btn-primary text-white" to={`/edit_post/${post.id}`}>Edit Post</Link>
             </div>
             <hr />
             <h4>Comments</h4>
