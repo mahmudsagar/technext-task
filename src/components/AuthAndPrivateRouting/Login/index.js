@@ -10,7 +10,7 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [isError, setIsError] = useState(false);
     const history = useHistory();
-
+    //Login action handler
     const handleLogin = (e) => {
         e.preventDefault();
         let loggedInUser = {};
