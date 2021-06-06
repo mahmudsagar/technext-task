@@ -65,9 +65,7 @@ const UserList = () => {
             computedUsers = computedUsers.filter(
                 (user) =>
                     user.name.toLowerCase().includes(search.toLowerCase()) ||
-                    user.email
-                        .toLowerCase()
-                        .includes(search.toLowerCase()) ||
+                    user.email.toLowerCase().includes(search.toLowerCase()) ||
                     user.website.toLowerCase().includes(search.toLowerCase())
             );
             setTotalItems(computedUsers.length);
@@ -96,10 +94,10 @@ const UserList = () => {
                         <PerPageItem
                             onItemChange={(value) => {
                                 setItemPerPage(parseInt(value));
-                                setCurrentPage(1)
-                                localStorage.setItem('currentPage', "1")
+                                setCurrentPage(1);
+                                localStorage.setItem("currentPage", "1");
                             }}
-                            totalItems = {totalItems}
+                            totalItems={totalItems}
                         />
                     </div>
                     <div className="d-flex col-md-4 flex-row-reverse">
@@ -128,7 +126,14 @@ const UserList = () => {
                                             {/* {console.log(typeof(String(comment.id)))} */}
                                         </th>
                                         <td>
-                                            <Link to={`/user/${comment.id}`}>
+                                            <Link
+                                                to={`/user/${comment.id}`}
+                                                onClick={() =>
+                                                    localStorage.removeItem(
+                                                        "currentPostPage"
+                                                    )
+                                                }
+                                            >
                                                 {comment.name}
                                             </Link>
                                         </td>

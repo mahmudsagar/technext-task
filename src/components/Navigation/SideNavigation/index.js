@@ -1,10 +1,11 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext, useGlobalContext } from "../../../Context/Context";
-import {GrClose} from 'react-icons/gr'
+import { GrClose } from "react-icons/gr";
 import "./style.css";
 const SideNavigation = () => {
-    const {topbarHeight , showSidebar,setShowSidebar, currentUser } = useGlobalContext(AuthContext);
+    const { topbarHeight, showSidebar, setShowSidebar, currentUser } =
+        useGlobalContext(AuthContext);
     return (
         <aside
             className={`sidebar navbar-expand-lg ${
@@ -35,6 +36,9 @@ const SideNavigation = () => {
                                 activeClassName="active"
                                 className="nav-link"
                                 to={`/user/${currentUser?.id}`}
+                                onClick={() =>
+                                    localStorage.removeItem("currentPostPage")
+                                }
                             >
                                 Dashboard
                             </NavLink>
